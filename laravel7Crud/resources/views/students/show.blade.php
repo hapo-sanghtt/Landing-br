@@ -1,7 +1,5 @@
 @extends('base')
 
-@section('title', $student->title)
-
 @section('main')
 
 <div class="card">
