@@ -4,11 +4,11 @@
 
 <div class="'row">
     <div class="col-lg-12" style="text-align: center">
-        <h2>Student</h2>
+        <h1>Student</h1>
     </div>
     <div class="col-lg-12 margin-tb">
         <div class="pull-right">
-            <a style="margin: 19px;" href="{{ route('students.create')}}" class="btn btn-primary">New student</a>
+            <a class="btn btn-primary" href="{{ route('students.create')}}">New student</a>
         </div>
     </div>
     <br />
@@ -20,22 +20,25 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <td>ID</td>
-                <td>Name</td>
-                <td>Email</td>
-                <td>Address</td>
-                <td colspan=2>Action</td>
+                <td class="text-center"><strong>ID</strong></td>
+                <td class="text-center"><strong>Name</strong></td>
+                <td class="text-center"><strong>Mail</strong></td>
+                <td class="text-center"><strong>Address</strong></td>
+                <td colspan=3 class="text-center"><strong>Action</strong></td>
             </tr>
         </thead>
         <tbody>
             @foreach($students as $student)
             <tr>
-                <td>{{$student->id}}</td>
-                <td>{{$student->name}}</td>
-                <td>{{$student->email}}</td>
-                <td>{{$student->address}}</td>
+                <td class="text-center">{{$student->id}}</td>
+                <td class="text-center">{{$student->name}}</td>
+                <td class="text-center">{{$student->email}}</td>
+                <td class="text-center">{{$student->address}}</td>
                 <td>
-                    <a href="{{route('students.edit',$student->id)}}" class="btn btn-primary">Edit</a>
+                    <a class="btn btn-info" href="{{route('students.show',$student->id)}}">Show</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{{route('students.edit',$student->id)}}">Edit</a>
                 </td>
                 <td>
                     <form action="{{route('students.destroy',$student->id)}}" method="post">
@@ -49,4 +52,5 @@
         </tbody>
     </table>
 </div>
+
 @endsection

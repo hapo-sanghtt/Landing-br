@@ -15,8 +15,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::latest()->paginate(4);
-        return view('students.index', compact('students'))->with('i', (request()->input('page', 1) - 1) * 4);
+        $students = Student::paginate(10);
+        return view('students.index', compact('students'));
     }
 
     /**
@@ -43,7 +43,7 @@ class StudentController extends Controller
             'address' => $request->get('address'),
         ]);
         $student->save();
-        return redirect('/students')->with('success', 'Student save!');
+        return redirect()->route('students.index')->with('success', 'Student save!');
     }
 
     /**
@@ -54,7 +54,8 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+        $student = Student::findOrFail($id);
+        return view('students.show', compact('student'));
     }
 
     /**
@@ -65,7 +66,7 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         return view('students.edit', compact('student'));
     }
 
@@ -83,12 +84,12 @@ class StudentController extends Controller
             'email' => 'required',
             'address' => 'required'
         ]);
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $student->name=$request->input('name');
         $student->email=$request->input('email');
         $student->address=$request->input('address');
         $student->save();
-        return redirect('/students')->with('success', 'Student update!');
+        return redirect()->route('students.index')->with('success', 'Student update!');
     }
 
     /**
@@ -99,8 +100,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $student = Student::find($id);
+        $student = Student::findOrFail($id);
         $student->delete();
-        return redirect('/students')->with('success', 'Student delete!');
+        return redirect()->route('students.index')->with('success', 'Student delete!');
     }
 }

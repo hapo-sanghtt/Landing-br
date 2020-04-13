@@ -16,27 +16,5 @@
         @yield('main')
     </div>
 </body>
-<script>
-    $(document).ready(function() {
-
-        $('#new-student').click(function() {
-            $('#btn-save').val("create-student");
-            $('#student').trigger("reset");
-            $('#studentCrudModal').html("Add New Student");
-        });
-
-        $('body').on('click', '#edit-student', function() {
-            var student_id = $(this).data('id');
-            $.get('students/' + student_id + '/edit', function(data) {
-                $('#studentCrudModal').html("Edit student");
-                $('#btn-update').val("Update");
-                $('#std_id').val(data.id);
-                $('#name').val(data.name);
-                $('#email').val(data.email);
-                $('#address').val(data.address);
-            })
-        });
-    });
-</script>
 
 </html>
