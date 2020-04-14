@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveStudent;
 use Illuminate\Http\Request;
 use App\Student;
 use Redirect, Response;
@@ -37,12 +38,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $student = new Student([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'address' => $request->get('address'),
-        ]);
-        $student->save();
+        Student::create($request->only(['name','email','address']));
         return redirect()->route('students.index')->with('success', 'Student save!');
     }
 
@@ -77,18 +73,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SaveStudent $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'address' => 'required'
-        ]);
         $student = Student::findOrFail($id);
-        $student->name=$request->input('name');
-        $student->email=$request->input('email');
-        $student->address=$request->input('address');
-        $student->save();
+        $student->update($request->only(['name', 'email', 'address']));
         return redirect()->route('students.index')->with('success', 'Student update!');
     }
 
